@@ -1,0 +1,30 @@
+.temp{
+	width: 50px;
+    padding: 10px;
+    color: white;
+    font-size: 12px;	
+}
+.max{
+	background: #EA5455; 
+	margin-right: 20px;
+}
+.min{
+	background: #60BEB3;
+    margin-right: 10px;
+}
+
+.date{
+	margin-top: 27px;
+    font-size: 14px;
+    margin-right: 12px;
+}
+
+.default-tab{
+	padding: 20px;
+	text-align: center;
+}
+.icon{
+	padding: 12px;
+    height: 75px;
+    width: 75px;
+}
