@@ -5,44 +5,37 @@ app.controller('WeatherController', function($mdSidenav, $scope, $http) {
 	var geoPosition = "";
 	$scope.tags = [];
 	$scope.apiKey = '83d93afaf33ce5655b548adb305809e2';
-	$scope.url = 'http://api.openweathermap.org/data/2.5/forecast/daily?';
+	$scope.apiUrl = 'http://api.openweathermap.org/data/2.5/forecast/daily?';
 
 	self.toggleSidenav = function(menuId) {
 		$mdSidenav(menuId).toggle();
 	};
+	
 	$scope.cityArray = [];
 	$scope.cities = {};
+	
 	$scope.addCity = function(city) {
-		console.log('City Name :: ' + city);
-		$scope.addTab(city, '');
+		$scope.addTab(city,'');
 		$scope.loading = true;
+		$scope.params = "";
 		if (city == 'Current City') {
-			$http.get(
-					$scope.url + 'lat=' + geoPosition.coords.latitude + '&lon='
-							+ geoPosition.coords.longitude
-							+ '&mode=json&units=metric&cnt=14&APPID='
-							+ $scope.apiKey).then(function(response) {
-				var resp = angular.fromJson(response);
-				$scope.cities[city] = resp.data;
-				$scope.cityArray.push($scope.cities[city]);
-				})
-				.finally(function () {
-				      $scope.loading = false;
-				 });
-			
+			params = $scope.apiUrl + 'lat=' + geoPosition.coords.latitude+'&lon='
+			+ geoPosition.coords.longitude
+			+ '&mode=json&units=metric&cnt=14&APPID='
+			+ $scope.apiKey;
 		} else {
-			$http.get(
-					$scope.url + 'q=' + city
-							+ '&mode=json&units=metric&cnt=14&APPID='
-							+ $scope.apiKey).then(function(response) {
-				var resp = angular.fromJson(response);
-				$scope.cities[city] = resp.data;
-				$scope.cityArray.push($scope.cities[city]);
-			})
-			.finally(function () {
-			      $scope.loading = false;
-			 });
+			params = $scope.apiUrl + 'q=' + city
+			+ '&mode=json&units=metric&cnt=14&APPID='
+			+ $scope.apiKey;			
 		}
+		$http.get(params).then(function(response) {
+			var resp = angular.fromJson(response);
+			$scope.cities[city] = resp.data;
+			$scope.cityArray.push($scope.cities[city]);
+		})
+		.finally(function () {
+			$scope.loading = false;
+		 });
 		return city;
 	};
 
@@ -53,6 +46,7 @@ app.controller('WeatherController', function($mdSidenav, $scope, $http) {
 		previous = selected;
 		selected = tabs[current];
 	});
+	
 	$scope.addTab = function(title, view) {
 		view = view || title + " Content View";
 		tabs.push({
@@ -61,6 +55,7 @@ app.controller('WeatherController', function($mdSidenav, $scope, $http) {
 			disabled : false
 		});
 	};
+	
 	$scope.removeTab = function(tab) {
 		var index = tabs.indexOf(tab);
 		tabs.splice(index, 1);
@@ -78,6 +73,7 @@ app.controller('WeatherController', function($mdSidenav, $scope, $http) {
 		geoPosition = position;
 		$scope.addCity('Current City');
 	}
+	
 	function showError(error) {
 		switch (error.code) {
 		case error.PERMISSION_DENIED:
@@ -94,6 +90,7 @@ app.controller('WeatherController', function($mdSidenav, $scope, $http) {
 			break;
 		}
 	}
+	
 	getLocation();
 
 });

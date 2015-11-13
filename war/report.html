@@ -1,10 +1,12 @@
 <md-list>
-     <md-subheader class="md-no-sticky">{{'City: '+cities[tab.title].city.name +" Longitude: "+ cities[tab.title].city.coord.lon+" Latitude: "+cities[tab.title].city.coord.lat}}</md-subheader>
+     <md-subheader class="md-no-sticky">{{ 'City: '+cities[tab.title].city.name +" Longitude: "+ cities[tab.title].city.coord.lon+" Latitude: "+cities[tab.title].city.coord.lat }}</md-subheader>
      <md-list-item class="md-3-line" ng-repeat="item in cities[tab.title].list">
-       <span class="date">{{item.dt*1000 |date: "MMM dd',' yyyy"}}</span><img ng-src="{{'/img/'+item.weather[0].icon+'.png'}}" class="md-avatar" alt="{{item.weather[0].icon}}" />
+       <span class="date">{{ item.dt*1000 | date: "MMM dd',' yyyy" }}</span><img ng-src="{{'/img/'+item.weather[0].icon+'.png'}}" class="md-avatar" alt="{{item.weather[0].icon}}" />
        <div class="md-list-item-text" layout="column">
-         <h3><span class="max temp">{{item.temp.max+'&deg;C'}}</span><span class="min temp">{{item.temp.min+'&deg;C'}}</span>
-         <small><i>{{item.weather[0].description}}</i></small></h3>
+         <h3><span class="max temp">{{ item.temp.max+'&deg;C' }}</span>
+         	 <span class="min temp">{{ item.temp.min+'&deg;C' }}</span>
+         	 <small><i>{{ item.weather[0].description }}</i></small>
+         </h3>
          <p>{{ 'Speed: '+item.speed+' m/s' }}</p>
          <p>{{ 'Clouds: '+item.clouds+'%, Pressure: '+item.pressure+' hpa' }}</p>
        </div>
